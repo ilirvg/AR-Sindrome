@@ -28,9 +28,13 @@ public class PostProcessingController : MonoBehaviour {
         focalSettings.focalLength = focalValue;
         ppProfile.depthOfField.settings = focalSettings;
     }
-    public void HueColorAtRuntime(float newHueValue) {
+    public void HueColorAtRuntime(float reset) {
         // randomly generate the vale between -180 - 180 default 10
-        hueValue = newHueValue;
+        hueValue = Random.Range(-180f, 180f);
+        if (reset == 0) {
+            hueValue = 0;
+        }
+        
         if (!ppProfile.colorGrading.enabled) {
             ppProfile.colorGrading.enabled = true;
         }
@@ -59,7 +63,7 @@ public class PostProcessingController : MonoBehaviour {
         grainSettings.intensity = grainValue;
         ppProfile.grain.settings = grainSettings;
     }
-    public void VintageAtRuntime(float newVignetteValue) {
+    public void VignetteAtRunTime(float newVignetteValue) {
         //value need to be generated randomly 0-0.35
         vignetteValue = newVignetteValue;
         if (!ppProfile.vignette.enabled) {
@@ -70,11 +74,12 @@ public class PostProcessingController : MonoBehaviour {
         ppProfile.vignette.settings = vignetteSettings;
     }
     public void ValueReset() {
+        Debug.Log("If working");
         HueColorAtRuntime(0);
         DepthOfFieldAtRuntime(50);
         ChromaticAtRuntime(0);
         GrainAtRuntime(0);
-        VintageAtRuntime(0);
+        VignetteAtRunTime(0);
     }
 
 }
