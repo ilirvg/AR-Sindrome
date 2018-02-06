@@ -1310,7 +1310,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -1328,8 +1328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ppProfile: {fileID: 11400000, guid: e7c0e43ab4dd484449c4832a4fb33f8e, type: 2}
-  focalValue: 50
-  hueValue: 0
 --- !u!114 &1671086351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,7 +1606,7 @@ Camera:
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -1640,7 +1638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   background: {fileID: 1973049183}
   snapground: {fileID: 1809561469}
-  fit: {fileID: 0}
+  fit: {fileID: 1973049182}
 --- !u!1 &1973049180
 GameObject:
   m_ObjectHideFlags: 0

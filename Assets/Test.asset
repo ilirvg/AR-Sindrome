@@ -55,7 +55,7 @@ MonoBehaviour:
       reflection:
         blendType: 0
         reflectionQuality: 2
-        maxDistance: 100
+        maxDistance: 141
         iterationCount: 256
         stepSize: 3
         widthModifier: 0.5
@@ -94,7 +94,7 @@ MonoBehaviour:
       adaptationType: 0
       speedUp: 2
       speedDown: 1
-      logMin: -8
+      logMin: -1
       logMax: 4
   bloom:
     m_Enabled: 0
@@ -113,7 +113,7 @@ MonoBehaviour:
     m_Settings:
       tonemapping:
         tonemapper: 2
-        neutralBlackIn: 0.02
+        neutralBlackIn: 0.03
         neutralWhiteIn: 10
         neutralBlackOut: 0
         neutralWhiteOut: 10
@@ -123,7 +123,7 @@ MonoBehaviour:
         postExposure: 0
         temperature: 1
         tint: 1
-        hueShift: -0
+        hueShift: 0
         saturation: 1
         contrast: 1
       channelMixer:
@@ -281,25 +281,25 @@ MonoBehaviour:
       lut: {fileID: 0}
       contribution: 0.973
   chromaticAberration:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.1
+      intensity: 0
   grain:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
-      colored: 1
-      intensity: 0.954
-      size: 1.06
-      luminanceContribution: 0.557
+      colored: 0
+      intensity: 0
+      size: 1.5
+      luminanceContribution: 0.5
   vignette:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
       center: {x: 0.5, y: 0.5}
-      intensity: 0.45
-      smoothness: 0.2
+      intensity: 0
+      smoothness: 0.503
       roundness: 1
       mask: {fileID: 0}
       opacity: 1

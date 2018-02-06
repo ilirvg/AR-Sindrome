@@ -6,18 +6,18 @@ using UnityEngine.UI;
 
 public class PhoneCamera : MonoBehaviour {
 
-    private bool camAvailable;
-    private WebCamTexture backCam;
-    private Texture2DArray snap;
-    //private Texture2D snap;
-    public Texture defaultBackground;
-
     public RawImage background;
     public RawImage snapground;
     public AspectRatioFitter fit;
 
+    private bool camAvailable;
+    private WebCamTexture backCam;
+    private Texture2D[] snapArray;
+    private IEnumerator coroutine;
+    private IEnumerator coroutines;
+    private int buffer = 10;
+
 	void Start () {
-         snapground.texture = defaultBackground;
 
         WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -36,12 +36,10 @@ public class PhoneCamera : MonoBehaviour {
                 backCam = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
             }
         }
-
         if (backCam == null) {
             Debug.Log("There is not back camera detected");
             return;
         }
-
         backCam.Play();
         background.texture = backCam;
         background.material.mainTexture = backCam;
@@ -52,13 +50,13 @@ public class PhoneCamera : MonoBehaviour {
         if (!camAvailable) {
             return;
         }
-        if (Input.GetButton("Fire1")) {
-            TakeSnapshot();
+        if (Input.GetButtonDown("Fire1")) {
+            coroutines = TakeSnapshots();
+            StartCoroutine(coroutines);
         }
         if (Input.GetKeyDown("space")) {
             ShowSnapshot();
         }
-
         float ratio = (float)backCam.width / (float)backCam.height;
         fit.aspectRatio = ratio;
 
@@ -69,24 +67,39 @@ public class PhoneCamera : MonoBehaviour {
         background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
     }
 
-    private void TakeSnapshot() {
-        int depthValue = 5;
-        snap = new Texture2DArray(snapground.texture.width, snapground.texture.height, depthValue, TextureFormat.RGBA32, false);
-        Color[] pix = backCam.GetPixels();
-        for (int i = 0; i < depthValue; i++) { 
-            snap.SetPixels(pix[i], i);
-        }
-        snap.Apply();
-    }
-
     private void ShowSnapshot() {
-        //Add saved frame to the background
-        snapground.texture = snap;
+        coroutine = AddSnapshots();
+        StartCoroutine(coroutine);
 
         //Make the snaped frame image visable
         float alpha = 0.5f;
         Color currColor = snapground.color;
         currColor.a = alpha;
         snapground.color = currColor;
+    }
+    private void HideSnapshotLayer() {
+        float alpha = 0f;
+        Color currColor = snapground.color;
+        currColor.a = alpha;
+        snapground.color = currColor;
+    }
+
+    private IEnumerator TakeSnapshots() {
+        snapArray = new Texture2D[buffer];
+        for (int i = 0; i < buffer; i++) {
+            snapArray[i] = new Texture2D(background.texture.width, background.texture.height);
+            snapArray[i].SetPixels(backCam.GetPixels());
+            snapArray[i].Apply();
+            yield return new WaitForSeconds(0.2f);
+        }
+        ShowSnapshot();
+    }
+
+    private IEnumerator AddSnapshots() {
+        for (int i = 0; i < buffer; i++) {
+            snapground.texture = snapArray[i];
+            yield return new WaitForSeconds(0.2f);
+        }
+        HideSnapshotLayer();
     }
 }
